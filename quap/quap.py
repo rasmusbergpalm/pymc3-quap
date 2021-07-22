@@ -37,6 +37,8 @@ def quap(vars, n_samples=10_000):
     mean = np.concatenate([np.atleast_1d(map[v.name]) for v in vars])
     posterior = scipy.stats.multivariate_normal(mean=mean, cov=cov)
     draws = posterior.rvs(n_samples)[np.newaxis, ...]
+    if draws.ndim == 2:
+        draws = draws[..., np.newaxis]
     samples = {}
     i = 0
     for v in vars:

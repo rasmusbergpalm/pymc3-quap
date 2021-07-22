@@ -48,6 +48,19 @@ class TestQuap(unittest.TestCase):
         assert np.all(np.bitwise_and(weight_hdi[:, 0] < A, A < weight_hdi[:, 1]))
         assert hdi.noise.values[0] < sigma < hdi.noise.values[1]
 
+    def test_works_with_single_parameter_models(self):
+        np.random.seed(1234)
+        N = 983
+        k = 19
+
+        with pm.Model() as m:
+            p = pm.Beta("p", 1, 3)
+            y = pm.Binomial("y", p=p, n=N, observed=k)
+            idata, _ = quap([p])
+
+        hdi = az.hdi(idata).p.values
+        assert np.allclose(hdi, np.array([0.01093989, 0.02734075]))
+
 
 if __name__ == '__main__':
     unittest.main()

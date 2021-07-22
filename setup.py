@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name='pymc3-quap',
-    version='1.0.1',
+    version='1.0.2',
     author="Rasmus Berg Palm",
     author_email="rasmusbergpalm@gmail.com",
     description="Quadratic approximation for PyMC3",
